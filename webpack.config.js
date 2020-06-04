@@ -4,6 +4,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.html$/,
         use: [
           {
@@ -30,5 +35,8 @@ module.exports = {
       template: "./public/index.html",
       filename: "./index.html"
     })
-  ]
+  ],
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ],
+  },
 };
