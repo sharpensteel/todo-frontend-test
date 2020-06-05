@@ -1,28 +1,37 @@
-export interface SystemState {
-    loggedIn: boolean;
-    session: string;
-    userName: string;
+
+export interface ITodoUnsaved {
+    title: string;        // short todo title
+    description: string;  // todo detailed description
+    priority: string;     // importance of task
+    tags: string[];       // tags
 }
 
-export interface TodoUnsaved {
-    title: string,        // short todo title
-    description: string,  // todo detailed description
-    priority: string,     // importance of task
-    tags: string[],       // tags
+export interface ITodo extends ITodoUnsaved{
+    id?: number;            // unique ID of call
+    createdAt: Date;        // creation date
+    isDone: boolean;        // if todo is done or not
+    isDonePending: boolean; // if todo is saving right now
 }
 
-export interface Todo extends TodoUnsaved{
-    id?: number,            // unique ID of call
-    createdAt: Date,        // creation date
-    isDone: boolean,        // if todo is done or not
-    isDonePending: boolean, // if todo is saving right now
+export interface ITodoState {
+    todos: ITodo[];
+    isCreatorOpened: boolean;
+    todoSavePending: ITodoUnsaved;
+    detailTodoIdOpened: number | null;
 }
 
-export interface TodoState {
-    todos: Todo[],
-    isCreatorOpened: boolean,
-    todoSavePending: TodoUnsaved,
-    detailTodoIdOpened: number | null,
+export class TodoUnsaved implements ITodoUnsaved {
+    title: string;        // short todo title
+    description: string;  // todo detailed description
+    priority: string;     // importance of task
+    tags: string[];       // tags
+}
+
+export class Todo extends TodoUnsaved implements ITodo{
+    id?: number;            // unique ID of call
+    createdAt: Date;        // creation date
+    isDone: boolean;        // if todo is done or not
+    isDonePending: boolean; // if todo is saving right now
 }
 
 export const TODO_TODOS_LOADED = 'TODO_TODOS_LOADED';
@@ -42,54 +51,54 @@ export const TODO_MARK_DONE_ERROR = 'TODO_MARK_DONE_ERROR';
 export const TODO_MARKED_DONE = 'TODO_CHANGED_DONE';
 
 
-export interface TodosLoadedAction {
+export interface ITodosLoadedAction {
     type: typeof TODO_TODOS_LOADED;
-    payload: Todo[];
+    payload: ITodo[];
 }
 
-export interface CreatorOpenAction {
+export interface ICreatorOpenAction {
     type: typeof TODO_CREATOR_OPEN;
 }
 
-export interface CreatorCancelAction {
+export interface ICreatorCancelAction {
     type: typeof TODO_CREATOR_CANCEL;
 }
 
-export interface CreatorSaveAction {
+export interface ICreatorSaveAction {
     type: typeof TODO_CREATOR_SAVE;
-    payload: TodoUnsaved;
+    payload: ITodoUnsaved;
 }
 
-export interface CreatorSavedAction {
+export interface ICreatorSavedAction {
     type: typeof TODO_CREATOR_SAVED;
-    payload: Todo;
+    payload: ITodo;
 }
 
-export interface CreatorSaveErrorAction {
+export interface ICreatorSaveErrorAction {
     type: typeof TODO_CREATOR_SAVE_ERROR;
     payload: Error | string;
 }
 
-export interface DetailOpenAction {
+export interface IDetailOpenAction {
     type: typeof TODO_DETAIL_OPEN;
     payload: number;
 }
 
-export interface DetailOpenedAction {
+export interface IDetailOpenedAction {
     type: typeof TODO_DETAIL_OPENED;
-    payload: Todo;
+    payload: ITodo;
 }
 
-export interface DetailCloseAction {
+export interface IDetailCloseAction {
     type: typeof TODO_DETAIL_CLOSE;
 }
 
-export interface MarkDoneAction {
+export interface IMarkDoneAction {
     type: typeof TODO_MARK_DONE;
     payload: number;
 }
 
-export interface MarkDoneErrorAction {
+export interface IMarkDoneErrorAction {
     type: typeof TODO_MARK_DONE_ERROR;
     payload: {
         id: number;
@@ -97,21 +106,21 @@ export interface MarkDoneErrorAction {
     };
 }
 
-export interface MarkedDoneAction {
+export interface IMarkedDoneAction {
     type: typeof TODO_MARKED_DONE;
     payload: number;
 }
 
-export type TodoActionTypes =
-    TodosLoadedAction |
-    CreatorOpenAction |
-    CreatorCancelAction |
-    CreatorSaveAction |
-    CreatorSavedAction |
-    CreatorSaveErrorAction |
-    DetailOpenAction |
-    DetailOpenedAction |
-    DetailCloseAction |
-    MarkDoneAction |
-    MarkDoneErrorAction |
-    MarkedDoneAction;
+export type ITodoActionTypes =
+    ITodosLoadedAction |
+    ICreatorOpenAction |
+    ICreatorCancelAction |
+    ICreatorSaveAction |
+    ICreatorSavedAction |
+    ICreatorSaveErrorAction |
+    IDetailOpenAction |
+    IDetailOpenedAction |
+    IDetailCloseAction |
+    IMarkDoneAction |
+    IMarkDoneErrorAction |
+    IMarkedDoneAction;

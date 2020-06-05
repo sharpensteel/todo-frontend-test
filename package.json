@@ -11,30 +11,33 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
-    "memoize-one": "^5.1.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  },
-  "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "antd": "^4.3.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.3.0",
     "immer": "^6.0.9",
+    "memoize-one": "^5.1.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
+    "react-tagsinput": "^3.19.0",
     "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "style-loader": "^1.2.1",
+    "superagent": "^5.2.2",
     "ts-loader": "^7.0.5",
     "tslib": "^2.0.0",
     "typescript": "^3.9.3",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.8",
     "webpack-dev-server": "^3.11.0"
   }
 }

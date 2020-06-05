@@ -13,20 +13,20 @@ import {
     TODO_MARK_DONE_ERROR,
     TODO_MARKED_DONE,
     TODO_TODOS_LOADED,
-    Todo,
-    TodoActionTypes,
-    TodoState
+    ITodo,
+    ITodoActionTypes,
+    ITodoState
 } from "./types";
 
 
-const initialState: TodoState = {
+const initialState: ITodoState = {
     todos: [],
     isCreatorOpened: false,
     todoSavePending: null,
     detailTodoIdOpened: null,
 };
 
-function mutateTodoById(todos: Todo[], id: number, mutate: (Todo) => (Todo | void)): Todo[] {
+function mutateTodoById(todos: ITodo[], id: number, mutate: (Todo) => (ITodo | void)): ITodo[] {
     produce(todos, draft =>{
         for(let [ind, todo] of draft.entries()){
             if(todo.id === id){
@@ -43,8 +43,8 @@ function mutateTodoById(todos: Todo[], id: number, mutate: (Todo) => (Todo | voi
 
 export function todoReducer(
     state = initialState,
-    action: TodoActionTypes
-): TodoState {
+    action: ITodoActionTypes
+): ITodoState {
 
     switch (action.type) {
         case TODO_TODOS_LOADED: {
@@ -109,19 +109,19 @@ export function todoReducer(
         case TODO_MARK_DONE: {
             return {
                 ...state,
-                todos: mutateTodoById(state.todos, action.payload, (draft: Todo) => { draft.isDonePending = true; }),
+                todos: mutateTodoById(state.todos, action.payload, (draft: ITodo) => { draft.isDonePending = true; }),
             }
         }
         case TODO_MARK_DONE_ERROR: {
             return {
                 ...state,
-                todos: mutateTodoById(state.todos, action.payload.id, (draft: Todo) => { draft.isDonePending = false; }),
+                todos: mutateTodoById(state.todos, action.payload.id, (draft: ITodo) => { draft.isDonePending = false; }),
             }
         }
         case TODO_MARKED_DONE: {
             return {
                 ...state,
-                todos: mutateTodoById(state.todos, action.payload, (draft: Todo) => {
+                todos: mutateTodoById(state.todos, action.payload, (draft: ITodo) => {
                     draft.isDonePending = false;
                     draft.isDone = true;
                 }),
