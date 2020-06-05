@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 import Header from './Header';
-import { AppState } from "../store";
+import {AppState} from "../store";
 import {todosLoaded} from "../store/todo/actions";
+import TodoCreator from "./todo/TodoCreator";
 
 interface AppProps {
     todosLoaded: typeof todosLoaded;
@@ -11,19 +12,32 @@ interface AppProps {
     thunkSendMessage: any;
 }
 
-const App = () => {
-  return (
-    <div>
-      <Header/>
-      <div className="view">Some todos should be here23</div>
-    </div>
-  );
+class App extends React.PureComponent<AppProps> {
+
+    constructor(props: AppProps) {
+        super(props);
+    }
+
+    render(): React.ReactNode {
+        let {state} = this.props;
+
+        return <div>
+            <Header/>
+
+            <div className="view">Some todos should be here23</div>
+
+            {this.props.state.isCreatorOpened ?
+                <TodoCreator isTodoSavePending={!!state.todoSavePending} save={}/> : null
+            }
+
+
+        </div>;
+    }
+
 };
 
 
-const mapStateToProps = (state: AppState) => (state);
-
 export default connect(
-    mapStateToProps,
-    { todosLoaded }
+    (state: AppState) => ({state}),
+    {todosLoaded}
 )(App);
