@@ -7,7 +7,7 @@ export interface ITodoUnsaved {
 }
 
 export interface ITodo extends ITodoUnsaved{
-    id?: number;            // unique ID of call
+    id?: string;            // unique ID of call
     createdAt: Date;        // creation date
     isDone: boolean;        // if todo is done or not
     isDonePending: boolean; // if todo is saving right now
@@ -17,7 +17,7 @@ export interface ITodoState {
     todos: ITodo[];
     isCreatorOpened: boolean;
     todoSavePending: ITodoUnsaved;
-    detailTodoIdOpened: number | null;
+    detailTodoIdOpened: string | null;
 }
 
 export class TodoUnsaved implements ITodoUnsaved {
@@ -28,7 +28,7 @@ export class TodoUnsaved implements ITodoUnsaved {
 }
 
 export class Todo extends TodoUnsaved implements ITodo{
-    id?: number;            // unique ID of call
+    id?: string;            // unique ID of call
     createdAt: Date;        // creation date
     isDone: boolean;        // if todo is done or not
     isDonePending: boolean; // if todo is saving right now
@@ -81,7 +81,7 @@ export interface ICreatorSaveErrorAction {
 
 export interface IDetailOpenAction {
     type: typeof TODO_DETAIL_OPEN;
-    payload: number;
+    payload: string;
 }
 
 export interface IDetailOpenedAction {
@@ -95,20 +95,20 @@ export interface IDetailCloseAction {
 
 export interface IMarkDoneAction {
     type: typeof TODO_MARK_DONE;
-    payload: number;
+    payload: string;
 }
 
 export interface IMarkDoneErrorAction {
     type: typeof TODO_MARK_DONE_ERROR;
     payload: {
-        id: number;
+        id: string;
         error: Error | string;
     };
 }
 
 export interface IMarkedDoneAction {
     type: typeof TODO_MARKED_DONE;
-    payload: number;
+    payload: string;
 }
 
 export type ITodoActionTypes =

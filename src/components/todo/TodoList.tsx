@@ -5,7 +5,6 @@ import {ITodo} from '../../store/todo/types';
 import {markDone as markDoneAction, detailOpen as detailOpenAction} from '../../store/todo/actions';
 
 
-
 const TodoList = ({todos, markDone, detailOpen}: {
     todos:ITodo[],
     markDone: typeof markDoneAction,

@@ -55,7 +55,7 @@ export function creatorSaveError(error: Error | string): ICreatorSaveErrorAction
     };
 }
 
-export function detailOpen(id: number): IDetailOpenAction {
+export function detailOpen(id: string): IDetailOpenAction {
     return {
         type: TODO_DETAIL_OPEN,
         payload: id,
@@ -75,21 +75,21 @@ export function detailClose(): IDetailCloseAction {
     };
 }
 
-export function markDone(id: number): IMarkDoneAction {
+export function markDone(id: string): IMarkDoneAction {
     return {
         type: TODO_MARK_DONE,
         payload: id,
     };
 }
 
-export function markDoneError(id: number, error: Error | string): IMarkDoneErrorAction {
+export function markDoneError(id: string, error: Error | string): IMarkDoneErrorAction {
     return {
         type: TODO_MARK_DONE_ERROR,
         payload: {id, error},
     };
 }
 
-export function markedDone(id: number): IMarkedDoneAction {
+export function markedDone(id: string): IMarkedDoneAction {
     return {
         type: TODO_MARKED_DONE,
         payload: id,

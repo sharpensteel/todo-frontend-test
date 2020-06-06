@@ -1,31 +1,39 @@
 import * as React from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {useDispatch, useSelector, shallowEqual} from "react-redux";
 
 import Header from './Header';
 import {AppState} from "../store";
-import {creatorCancel, creatorOpen, creatorSave, detailOpen, todosLoaded} from "../store/todo/actions";
+import {creatorCancel, creatorOpen, detailClose} from "../store/todo/actions";
 import TodoCreator from "./todo/TodoCreator";
 import TodoList from "./todo/TodoList";
 import {Button} from "antd";
-import {markDone} from '../store/todo/actions';
 
 import 'antd/dist/antd.css';
-import {useEffect, useState} from "react";
-import {thunkLoadTodos} from "../store/todo/thunks";
+import '../css/todo.css';
+import {thunkCreatorSave, thunkDetailOpen, thunkLoadTodos, thunkMarkDone, thunkReset} from "../store/todo/thunks";
+import TodoDetail from "./todo/TodoDetail";
+import {Todo, TodoUnsaved} from "../store/todo/types";
+import {getTodoById} from "../store/todo/selectors";
+
 
 const App = () => {
+
 
     let {todos,
         isCreatorOpened,
         todoSavePending,
-        detailTodoIdOpened
-    }: AppState = useSelector((state: AppState) => ({
+        detailTodoOpened
+    } :{todos: Todo[],
+        isCreatorOpened: boolean,
+        todoSavePending: TodoUnsaved,
+        detailTodoOpened: Todo,
+    } = useSelector((state: AppState) => ({
         todos: state.todos,
         isCreatorOpened: state.isCreatorOpened,
         todoSavePending: state.todoSavePending,
-        detailTodoIdOpened: state.detailTodoIdOpened,
-    }));
-
+        detailTodoOpened: getTodoById(state, state.detailTodoIdOpened)
+    }), shallowEqual);
 
     const dispatch = useDispatch();
 
@@ -33,21 +41,29 @@ const App = () => {
 
     return <div>
         <Header/>
-        <div className='view'>
+        <div className='todos view'>
             <Button onClick={() => dispatch(creatorOpen())}>Add todo</Button>
+            <Button onClick={() => dispatch(thunkReset())} className='todo__reset'>Reset todos</Button>
 
             <TodoCreator
                 isOpen={isCreatorOpened}
                 isSavePending={!!todoSavePending}
                 onCancel={() => dispatch(creatorCancel())}
-                onSave={(todo) => dispatch(creatorSave(todo))}
+                onSave={(todo) => dispatch(thunkCreatorSave(todo))}
+            />
+
+            <TodoDetail
+                todo={detailTodoOpened}
+                isOpen={!!detailTodoOpened}
+                onClose={() => dispatch(detailClose())}
             />
 
             <TodoList
                 todos={todos}
-                markDone={id => dispatch(markDone(id))}
-                detailOpen={id => dispatch(detailOpen(id))}
+                markDone={id => dispatch(thunkMarkDone(id))}
+                detailOpen={id => dispatch(thunkDetailOpen(id))}
             />
+
         </div>
     </div>;
 };

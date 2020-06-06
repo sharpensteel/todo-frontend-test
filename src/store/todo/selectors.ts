@@ -2,9 +2,8 @@ import memoizeOne from 'memoize-one';
 import {ITodo, ITodoState} from "./types";
 
 
-
 const memoizedGetTodoMap = memoizeOne(
-    (todos: ITodo[]): {[key: number]: ITodo} => {
+    (todos: ITodo[]): {[key: string]: ITodo} => {
         let acc = {};
         for(let todo of (todos || [])){
             acc[todo.id] = todo;
@@ -13,4 +12,4 @@ const memoizedGetTodoMap = memoizeOne(
     }
 );
 
-export const getTodoById = (store: ITodoState, id: number) => memoizedGetTodoMap(store.todos)[id];
+export const getTodoById = (state: ITodoState, id: string) => memoizedGetTodoMap(state.todos)[id];

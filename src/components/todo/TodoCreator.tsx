@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { TodoUnsaved} from '../../store/todo/types';
 import {creatorCancel, creatorSave} from "../../store/todo/actions";
-import {Button, Checkbox, Form, Input, Modal, InputNumber} from 'antd';
-import {useEffect, useState} from "react";
+import {Form, Input, Modal, InputNumber} from 'antd';
+import {useEffect} from "react";
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
 
@@ -14,13 +14,6 @@ interface TodoCreatorProps {
     onSave: typeof creatorSave;
 }
 
-
-interface TagsInputWrapProps {
-    value?: string[];
-    onChange?: (value: string[]) => void;
-}
-
-
 export const TodoCreator: React.FC<TodoCreatorProps> = (
 {
     isOpen,
@@ -29,7 +22,6 @@ export const TodoCreator: React.FC<TodoCreatorProps> = (
     onSave,
 }) => {
     const [form] = Form.useForm();
-
 
     useEffect(
         () => { isOpen && form.resetFields(); }, // reset todo if Creator was open
@@ -76,7 +68,6 @@ export const TodoCreator: React.FC<TodoCreatorProps> = (
                     <InputNumber/>
                 </Form.Item>
 
-
                 <Form.Item name="tags" label="Tags" >
                     <TagsInput/>
                 </Form.Item>
@@ -85,65 +76,5 @@ export const TodoCreator: React.FC<TodoCreatorProps> = (
         </Modal>
     );
 };
-
-
-
-
-
-// const TodoCreator2: React.FunctionComponent<TodoCreatorProps> = (props: TodoCreatorProps) => {
-//
-//     const [todo, setTodo] = useState(() => new TodoUnsaved);
-//
-//     useEffect(
-//         () => { !props.isOpen && setTodo(new TodoUnsaved) }, // reset todo after Creator was closed
-//         [props.isOpen]
-//     );
-//
-//     const [form] = Form.useForm();
-//
-//     return <Modal
-//         visible={props.isOpen}
-//         title="TODO Creator"
-//         okText='Save'
-//         onOk={() => props.save(todo)}
-//         onCancel={props.cancel}
-//         okButtonProps={{loading: props.isSavePending}}
-//     >
-//         <Form
-//             labelCol={{ span: 8 }}
-//             wrapperCol={{ span: 16 }}
-//             name="basic"
-//             initialValues={{ remember: true }}
-//             // onFinish={onFinish}
-//             // onFinishFailed={onFinishFailed}
-//         >
-//             <Form.Item
-//                 label="Username"
-//                 name="username"
-//                 rules={[{ required: true, message: 'Please input your username!' }]}
-//             >
-//                 <Input />
-//             </Form.Item>
-//
-//             <Form.Item
-//                 label="Password"
-//                 name="password"
-//                 rules={[{ required: true, message: 'Please input your password!' }]}
-//             >
-//                 <Input.Password />
-//             </Form.Item>
-//
-//             <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-//                 <Checkbox>Remember me</Checkbox>
-//             </Form.Item>
-//
-//             <Form.Item {...tailLayout}>
-//                 <Button type="primary" htmlType="submit">
-//                     Submit
-//                 </Button>
-//             </Form.Item>
-//         </Form>
-//     </Modal>
-// };
 
 export default TodoCreator;

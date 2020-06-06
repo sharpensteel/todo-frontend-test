@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 
 import './css/app.css';
 import './css/header.css';
@@ -11,7 +11,7 @@ const store = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <App/>
     </Provider>,
-  document.getElementById('app'),
+    document.getElementById('app'),
 );

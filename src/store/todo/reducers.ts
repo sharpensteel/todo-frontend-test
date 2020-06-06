@@ -1,4 +1,4 @@
-import produce from "immer";
+import produce, {immerable} from "immer";
 
 import {
     TODO_CREATOR_CANCEL,
@@ -26,10 +26,11 @@ const initialState: ITodoState = {
     detailTodoIdOpened: null,
 };
 
-function mutateTodoById(todos: ITodo[], id: number, mutate: (Todo) => (ITodo | void)): ITodo[] {
-    produce(todos, draft =>{
+function mutateTodoById(todos: ITodo[], id: string, mutate: (Todo) => (ITodo | void)): ITodo[] {
+    return produce(todos, draft =>{
         for(let [ind, todo] of draft.entries()){
             if(todo.id === id){
+                todo[immerable] = true;
                 let newTodo = mutate(todo);
                 if(newTodo) {
                     draft[ind] = newTodo;
@@ -37,7 +38,6 @@ function mutateTodoById(todos: ITodo[], id: number, mutate: (Todo) => (ITodo | v
             }
         }
     });
-    return todos;
 }
 
 
@@ -73,7 +73,6 @@ export function todoReducer(
         }
         case TODO_CREATOR_SAVED: {
             let todo = action.payload;
-            // ... check fields
 
             return {
                 ...state,
@@ -93,7 +92,6 @@ export function todoReducer(
         }
         case TODO_DETAIL_OPENED: {
             let todo = action.payload;
-
             return {
                 ...state,
                 todos: mutateTodoById(state.todos, todo.id, oldTodo => ({...oldTodo, ...todo})),
